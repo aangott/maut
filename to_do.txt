@@ -1,0 +1,152 @@
+left off:
+  just got specify ratings page working. it appears to display the right values
+  for the ratings, but doesn't update properly.
+
+
+
+
+
+
+
+
+
+0. create new decision problem
+
+1. specify decision problem
+   [create/edit decision problem]
+
+2. specify attributes
+   [add/edit/delete attributes on the decision problem]
+
+3. specify options
+   [add/edit/delete options on the decision problem]
+
+4. specify ratings
+   [add/edit/delete ratings on attributes/options]
+
+5. rank attributes
+   [add/edit ranks on attributes]
+
+6. weight attributes
+   [add/edit weights on attributes]
+
+7. view scores
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+decision_problem
+-----------------
+description (text)
+has_many options
+has_many attributes
+
+
+option
+-----------------
+description (text)
+belongs_to decision_problem
+has_many ratings
+has_many attributes through: attribute_ratings
+total_score (calculated)
+
+
+attribute
+-----------------
+belongs_to decison_problem
+description
+rank
+weight
+
+
+attribute_ratings
+------------------
+belongs_to attribute
+belongs_to option
+value
+
+rails generate model Comment commenter:string body:text article:references
+
+
+
+
+
+
+
+
+
+
+decision_problems
+-------------------
+id
+desciption
+
+
+options
+-------------------
+id
+description
+decision_problem_id
+
+
+attributes
+--------------------
+id
+description
+rank
+weight
+decision_problem_id
+
+
+ratings
+--------------------
+id
+value
+attribute_id
+option_id
+
+
+
+
+
+

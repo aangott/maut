@@ -29,7 +29,6 @@ class DecisionProblemsController < ApplicationController
   # PUT /decision_problems/1/save_dimensions
   def save_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
-    # binding.pry
 
     if @decision_problem.update_attributes(params[:decision_problem])
       redirect_to action: "specify_options"
@@ -38,7 +37,7 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-
+  # GET /decision_problems/1/specify_options
   def specify_options
     @decision_problem = DecisionProblem.find(params[:id])
     if @decision_problem.options.empty?
@@ -48,10 +47,34 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
+  # PUT /decision_problems/1/save_options
+  def save_options
+    @decision_problem = DecisionProblem.find(params[:id])
 
+    if @decision_problem.update_attributes(params[:decision_problem])
+      redirect_to action: "specify_ratings"
+    else
+      render action: "specify_options"
+    end
+  end
 
+  # GET /decision_problems/1/specify_ratings
+  def specify_ratings
+    @decision_problem = DecisionProblem.find(params[:id])
+    @decision_problem.setup_ratings
+  end
 
+  # PUT /decision_problems/1/save_ratings
+  def save_ratings
+    binding.pry
+    @decision_problem = DecisionProblem.find(params[:id])
+    if @decision_problem.update_attributes(params[:decision_problem])
+      redirect_to root
+    else
+      render action: "specify_ratings"
+    end
 
+  end
 
 
 

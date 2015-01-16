@@ -1,0 +1,31 @@
+
+<%= form_for @decision_problem, url: save_ratings_decision_problem_path do |f| %>
+  <table>
+    <tr>
+      <th></th>
+      <th colspan='<%= @decision_problem.options.length %>'>Options</th>
+    </tr>
+    <tr>
+      <th>Dimensions</th>
+      <% @decision_problem.options.each do |option| %>
+        <th><%= option.description %></th>
+      <% end %>
+    </tr>
+    <% @decision_problem.dimensions.each do |dimension| %>
+      <tr>
+        <td><%= dimension.description %></td>
+        <% @decision_problem.options.each do |option| %>
+          <%= f.fields_for :options, option do |option_form| %>
+            <td>
+              <% rating = option.ratings.where(dimension_id: dimension.id).first %>
+              <%= option_form.fields_for :ratings, rating do |rating_form| %>
+                <%= rating_form.text_field :value %>
+              <% end %>
+            </td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= f.submit %>
+<% end %>

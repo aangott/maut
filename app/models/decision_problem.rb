@@ -14,13 +14,15 @@ class DecisionProblem < ActiveRecord::Base
   MINIMUM_OPTIONS_COUNT = 2
 
   def description_blank(attribs)
-    attribs[:desription].blank?
+    attribs[:description].blank?
   end
 
-
-
-
-
-
+  def setup_ratings
+    options.each do |option|
+      dimensions.each do |dimension|
+        option.ratings.where(dimension_id: dimension.id).first_or_create
+      end
+    end
+  end
 
 end
