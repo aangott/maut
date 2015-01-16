@@ -1,0 +1,16 @@
+<h1>Specify dimensions</h1>
+Description: <%= @decision_problem.description %>
+
+<%= nested_form_for @decision_problem, url: save_dimensions_decision_problem_path do |f| %>
+  <%= f.fields_for :dimensions do |dimension_form| %>
+    <%= dimension_form.text_field :description %>
+    <%= dimension_form.link_to_remove "Delete" %>
+  <% end %>
+  <%= f.link_to_add "Add a dimension", :dimensions %>
+  <%= f.submit %>
+
+<% end %>
+
+
+
+<%= params %>

@@ -1,0 +1,35 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: maut_development
+  pool: 5
+  username: andreaangott
+  password:
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: maut_test
+  pool: 5
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASS'] %>
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: maut_staging
+  pool: 5
+  username: rails
+  password:
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  database: maut_production
+  pool: 5
+  username: rails
+  password:

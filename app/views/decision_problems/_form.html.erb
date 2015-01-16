@@ -1,0 +1,21 @@
+<%= form_for(@decision_problem) do |f| %>
+  <% if @decision_problem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@decision_problem.errors.count, "error") %> prohibited this decision_problem from being saved:</h2>
+
+      <ul>
+      <% @decision_problem.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+<h1>Specify options</h1>
+Description: <%= @decision_problem.description %>
+
+<%= nested_form_for @decision_problem, url: save_options_decision_problem_path do |f| %>
+  <%= f.fields_for :options do |options_form| %>
+    <%= options_form.text_field :description %>
+    <%= options_form.link_to_remove "Delete" %>
+  <% end %>
+  <%= f.link_to_add "Add an option", :options %>
+  <%= f.submit %>
+
+<% end %>
+
+
+
+<%= params %>
