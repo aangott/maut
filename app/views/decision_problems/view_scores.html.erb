@@ -1,0 +1,14 @@
+<h1>View scores</h1>
+Description: <%= @decision_problem.description %>
+<table>
+  <tr>
+    <th>Option</th>
+    <th>Score</th>
+  </tr>
+  <% @options.each do |option| %>
+    <tr>
+      <td><%= option.description %></td>
+      <td><%= option.score %></td>
+    </tr>
+  <% end %>
+</table>

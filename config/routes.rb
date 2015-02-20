@@ -9,6 +9,14 @@ Maut::Application.routes.draw do
 
       get :specify_ratings
       put :save_ratings
+
+      get :rank_dimensions
+      put :save_dimension_ranks
+
+      get :weight_dimensions
+      put :save_dimension_weights
+
+      get :view_scores
     end
   end
 

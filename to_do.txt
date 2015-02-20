@@ -1,11 +1,18 @@
-left off:
-  just got specify ratings page working. it appears to display the right values
-  for the ratings, but doesn't update properly.
+// review code
+// forget idea of double-nested attribs, just assign in controller
 
 
 
 
+make sure ratings get destroyed if either the option or the dimension gets deleted
 
+add some validations (ratings must be numbers)
+
+put in instructions
+
+do some wireframing/storyboarding of ultimate look/feel
+
+hook up back/next buttons
 
 
 
@@ -15,20 +22,20 @@ left off:
 1. specify decision problem
    [create/edit decision problem]
 
-2. specify attributes
-   [add/edit/delete attributes on the decision problem]
+2. specify dimensions
+   [add/edit/delete dimensions on the decision problem]
 
 3. specify options
    [add/edit/delete options on the decision problem]
 
 4. specify ratings
-   [add/edit/delete ratings on attributes/options]
+   [add/edit/delete ratings on dimensions/options]
 
-5. rank attributes
-   [add/edit ranks on attributes]
+5. rank dimensions
+   [add/edit ranks on dimensions]
 
-6. weight attributes
-   [add/edit weights on attributes]
+6. weight dimensions
+   [add/edit weights on dimensions]
 
 7. view scores
 

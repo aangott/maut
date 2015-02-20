@@ -66,22 +66,54 @@ class DecisionProblemsController < ApplicationController
 
   # PUT /decision_problems/1/save_ratings
   def save_ratings
-    binding.pry
-    @decision_problem = DecisionProblem.find(params[:id])
-    if @decision_problem.update_attributes(params[:decision_problem])
-      redirect_to root
+    @errors = []
+    params[:ratings].each do |id, attribs|
+      rating = Rating.find(id)
+      rating.update_attributes(attribs)
+      @errors << rating.errors.full_messages if rating.errors.any?
+    end
+    if @errors.empty?
+      redirect_to action: "rank_dimensions"
     else
       render action: "specify_ratings"
     end
-
   end
 
+  # GET /decision_problems/1/rank_dimensions
+  def rank_dimensions
+    @decision_problem = DecisionProblem.find(params[:id])
+  end
 
+  # PUT /decision_problems/1/save_dimension_ranks
+  def save_dimension_ranks
+    @decision_problem = DecisionProblem.find(params[:id])
+    if @decision_problem.update_attributes(params[:decision_problem])
+      redirect_to action: "weight_dimensions"
+    else
+      render action: "rank_dimensions"
+    end
+  end
 
+  # GET /decision_problems/1/weight_dimensions
+  def weight_dimensions
+    @decision_problem = DecisionProblem.find(params[:id])
+  end
 
+  # PUT /decision_problems/1/save_dimension_weights
+  def save_dimension_weights
+    @decision_problem = DecisionProblem.find(params[:id])
+    if @decision_problem.update_attributes(params[:decision_problem])
+      redirect_to action: "view_scores"
+    else
+      render action: "weight_dimensions"
+    end
+  end
 
-
-
+  # GET /decision_problems/1/view_scores
+  def view_scores
+    @decision_problem = DecisionProblem.find(params[:id])
+    @options = @decision_problem.options.sort_by(&:score).reverse
+  end
 
   # GET /decision_problems/1/edit
   def edit

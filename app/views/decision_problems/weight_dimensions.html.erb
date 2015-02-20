@@ -1,0 +1,11 @@
+<h1>Weight dimensions</h1>
+Description: <%= @decision_problem.description %>
+
+<%= nested_form_for @decision_problem, url: save_dimension_weights_decision_problem_path do |f| %>
+  <%= f.fields_for :dimensions do |dimension_form| %>
+    <% disabled = dimension_form.object == @decision_problem.least_important_dimension ? true : false %>
+    <%= dimension_form.text_field :weight, disabled: disabled %>
+    <span><%= dimension_form.object.description %></span>
+  <% end %>
+  <%= f.submit %>
+<% end %>

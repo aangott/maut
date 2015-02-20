@@ -1,5 +1,7 @@
+<h1>Rate your options</h1>
+Description: <%= @decision_problem.description %>
 
-<%= form_for @decision_problem, url: save_ratings_decision_problem_path do |f| %>
+<%= form_tag save_ratings_decision_problem_path, method: :put do %>
   <table>
     <tr>
       <th></th>
@@ -15,17 +17,13 @@
       <tr>
         <td><%= dimension.description %></td>
         <% @decision_problem.options.each do |option| %>
-          <%= f.fields_for :options, option do |option_form| %>
-            <td>
-              <% rating = option.ratings.where(dimension_id: dimension.id).first %>
-              <%= option_form.fields_for :ratings, rating do |rating_form| %>
-                <%= rating_form.text_field :value %>
-              <% end %>
-            </td>
-          <% end %>
+          <% rating = option.ratings.where(dimension_id: dimension.id).first %>
+          <td>
+            <%= text_field_tag "[ratings][#{rating.id}][value]", rating.value %>
+          </td>
         <% end %>
       </tr>
     <% end %>
   </table>
-  <%= f.submit %>
+  <%= submit_tag %>
 <% end %>
