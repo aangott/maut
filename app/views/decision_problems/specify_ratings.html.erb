@@ -1,8 +1,23 @@
-<h1>Rate your options</h1>
-Description: <%= @decision_problem.description %>
-
+<h2>Step 4: Rate your options</h2>
+<div class='instructions narrow panel panel-default'>
+  <div class='panel-body'>
+    <p>
+      Now it's time to rate each of your options on each of the dimensions
+      that matters to you.  For each dimension, assign a 0 to the option that
+      is the worst on that dimension.  Assign 100 to the option that is the best
+      on that dimension.  For any other options, assign a score that places it
+      between the best and worst options appropriately.
+    </p>
+    <p>
+      For example, if you are trying to choose among colleges, if Boston College
+      were the least expensive you'd assign a <span class='example'>0</span>
+      to Boston College under Tuition.
+    </p>
+  </div>
+</div>
+<span class='your-decision'>Your decision: <%= @decision_problem.description %></span>
 <%= form_tag save_ratings_decision_problem_path, method: :put do %>
-  <table>
+  <table class='table table-striped'>
     <tr>
       <th></th>
       <th colspan='<%= @decision_problem.options.length %>'>Options</th>

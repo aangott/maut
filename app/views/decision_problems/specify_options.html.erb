@@ -1,12 +1,41 @@
-<h1>Specify options</h1>
-Description: <%= @decision_problem.description %>
-
-<%= nested_form_for @decision_problem, url: save_options_decision_problem_path do |f| %>
+<h2>Step 3: What are your options?</h2>
+<div class='instructions narrow panel panel-default'>
+  <div class='panel-body'>
+    <p>
+      What are some options you could choose that are worth seriously considering?
+      These are the possible choices we'll be evaluating.
+    </p>
+    <p>
+      For example, if you are trying to choose among colleges,
+      some options might be <span class='example'>University of Michigan</span>,
+      <span class='example'>Notre Dame</span>, and <span class='example'>Boston
+      College</span>.  If you were choosing among cars, you might list
+      <span class='example'>Honda Fit</span>, <span class='example'>Ford F-150,
+      </span> and <span class='example'>Toyota Camry</span>.
+    </p>
+    <p>
+      You should list at least two options that you are considering. A good
+      number to aim for would be 3-5.
+    </p>
+  </div>
+</div>
+<span class='your-decision'>Your decision: <%= @decision_problem.description %></span>
+<%= nested_form_for @decision_problem, url: save_options_decision_problem_path, html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :options do |options_form| %>
-    <%= options_form.text_field :description %>
-    <%= options_form.link_to_remove "Delete" %>
+    <div class='row'>
+      <div class='col-md-9'>
+        <%= options_form.text_field :description, class: 'form-control', placeholder: 'List an option you are considering' %>
+      </div>
+      <div class='col-md-3'>
+        <%= options_form.link_to_remove "Delete", class: 'btn btn-danger delete'   %>
+      </div>
   <% end %>
-  <%= f.link_to_add "Add an option", :options %>
-  <%= f.submit %>
+  <%= f.link_to_add "Add another option", :options, class: 'btn btn-success add' %>
+  <div class='clearfix'></div>
 
+  <%= link_to fa('arrow-left', 'fa-left') + " Step 2: What matters to you?",
+    specify_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+  <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+    Step 4: Rate your options <%= fa('arrow-right', 'fa-right') %>
+  <% end %>
 <% end %>

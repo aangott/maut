@@ -2,6 +2,18 @@
 // forget idea of double-nested attribs, just assign in controller
 
 
+make a get started page as homepage. explain purpose, limitations
+
+styling
+  // make a logo
+
+  set up error section
+
+
+
+  icons
+    try after getting rid of theme vars
+
 
 
 make sure ratings get destroyed if either the option or the dimension gets deleted

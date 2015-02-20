@@ -16,6 +16,21 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
+  # GET /decision_problems/1/edit
+  def edit
+    @decision_problem = DecisionProblem.find(params[:id])
+  end
+
+  # PUT /decision_problems/1
+  def update
+    @decision_problem = DecisionProblem.find(params[:id])
+    if @decision_problem.update_attributes(params[:decision_problem])
+      redirect_to action: "specify_dimensions", id: @decision_problem.id
+    else
+      render action: "edit"
+    end
+  end
+
   # GET /decision_problems/1/specify_dimensions
   def specify_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
@@ -115,10 +130,6 @@ class DecisionProblemsController < ApplicationController
     @options = @decision_problem.options.sort_by(&:score).reverse
   end
 
-  # GET /decision_problems/1/edit
-  def edit
-    @decision_problem = DecisionProblem.find(params[:id])
-  end
 
 
   # # GET /decision_problems
@@ -134,16 +145,6 @@ class DecisionProblemsController < ApplicationController
 
 
 
-  # # PUT /decision_problems/1
-  # def update
-  #   @decision_problem = DecisionProblem.find(params[:id])
-
-  #   if @decision_problem.update_attributes(params[:decision_problem])
-  #     format.html { redirect_to @decision_problem, notice: 'DecisionProblem was successfully updated.' }
-  #   else
-  #     format.html { render action: "edit" }
-  #   end
-  # end
 
   # # DELETE /decision_problems/1
   # def destroy

@@ -1,7 +1,21 @@
-<%= form_for(@decision_problem) do |f| %>
+<h2>Step 1: Describe your decision</h2>
+<div class='instructions narrow panel panel-default'>
+  <div class='panel-body'>
+    <p>
+      What is the decision you're trying to make?  It's usually best to phrase this
+      in the form of a question.
+    </p>
+    <p>
+      Some examples might be <span class='example'>Which car should
+      I buy?</span> or <span class='example'>Which college should I go to?</span>
+    </p>
+  </div>
+</div>
+
+<%= form_for @decision_problem, html: { class: 'narrow' } do |f| %>
   <% if @decision_problem.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@decision_problem.errors.count, "error") %> prohibited this decision_problem from being saved:</h2>
+    <div id='error_explanation'>
+      <h2><%= pluralize(@decision_problem.errors.count, 'error') %> prohibited this decision_problem from being saved:</h2>
 
       <ul>
       <% @decision_problem.errors.full_messages.each do |msg| %>
@@ -11,11 +25,13 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
+  <div class='field'>
+    <%= f.label :description, "What is the decision you're trying to make?" %><br />
+    <%= f.text_field :description, class: 'form-control' %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class='actions'>
+    <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+      Step 2: What matters to you? <%= fa('arrow-right', 'fa-right') %>
+    <% end %>
   </div>
 <% end %>
