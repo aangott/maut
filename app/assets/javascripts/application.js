@@ -11,7 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require bootstrap-sprockets
 //= require_tree .
+
+window.Maut = {};

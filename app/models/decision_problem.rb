@@ -35,14 +35,6 @@ class DecisionProblem < ActiveRecord::Base
     dimensions.detect { |d| d.rank == max_rank }
   end
 
-
-
-
-
-
-
-
-
   def setup_ratings
     options.each do |option|
       dimensions.each do |dimension|

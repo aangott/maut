@@ -1,3 +1,4 @@
+Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
 <h2>Step 2: What matters to you?</h2>
 <div class='instructions narrow panel panel-default'>
   <div class='panel-body'>
@@ -20,7 +21,6 @@
     </p>
   </div>
 </div>
-<span class='your-decision'>Your decision: <%= @decision_problem.description %></span>
 <%= nested_form_for @decision_problem, url: save_dimensions_decision_problem_path, html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :dimensions do |dimension_form| %>
     <div class='row'>

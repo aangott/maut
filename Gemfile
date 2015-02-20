@@ -18,6 +18,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'nested_form'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'font-awesome-sass', '~> 4.3.0'

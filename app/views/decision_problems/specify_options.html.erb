@@ -1,3 +1,4 @@
+Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
 <h2>Step 3: What are your options?</h2>
 <div class='instructions narrow panel panel-default'>
   <div class='panel-body'>
@@ -19,7 +20,6 @@
     </p>
   </div>
 </div>
-<span class='your-decision'>Your decision: <%= @decision_problem.description %></span>
 <%= nested_form_for @decision_problem, url: save_options_decision_problem_path, html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :options do |options_form| %>
     <div class='row'>
@@ -29,6 +29,7 @@
       <div class='col-md-3'>
         <%= options_form.link_to_remove "Delete", class: 'btn btn-danger delete'   %>
       </div>
+    </div>
   <% end %>
   <%= f.link_to_add "Add another option", :options, class: 'btn btn-success add' %>
   <div class='clearfix'></div>

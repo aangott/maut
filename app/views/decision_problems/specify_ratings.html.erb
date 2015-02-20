@@ -1,44 +1,60 @@
+Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
 <h2>Step 4: Rate your options</h2>
 <div class='instructions narrow panel panel-default'>
   <div class='panel-body'>
     <p>
       Now it's time to rate each of your options on each of the dimensions
-      that matters to you.  For each dimension, assign a 0 to the option that
-      is the worst on that dimension.  Assign 100 to the option that is the best
-      on that dimension.  For any other options, assign a score that places it
-      between the best and worst options appropriately.
-    </p>
-    <p>
-      For example, if you are trying to choose among colleges, if Boston College
-      were the least expensive you'd assign a <span class='example'>0</span>
-      to Boston College under Tuition.
+      that matter to you.  For each dimension, first choose which option is the
+      best on that dimension, and which option is the worst.  The sliders for
+      those options will be locked down. Then, move the sliders on the remaining
+      options to reflect where they rate between the best and worst options. If
+       you only have two options, you won't need to do this last step.
     </p>
   </div>
 </div>
-<span class='your-decision'>Your decision: <%= @decision_problem.description %></span>
 <%= form_tag save_ratings_decision_problem_path, method: :put do %>
-  <table class='table table-striped'>
-    <tr>
-      <th></th>
-      <th colspan='<%= @decision_problem.options.length %>'>Options</th>
-    </tr>
-    <tr>
-      <th>Dimensions</th>
-      <% @decision_problem.options.each do |option| %>
-        <th><%= option.description %></th>
-      <% end %>
-    </tr>
+  <div class='ratings-group'>
     <% @decision_problem.dimensions.each do |dimension| %>
-      <tr>
-        <td><%= dimension.description %></td>
-        <% @decision_problem.options.each do |option| %>
-          <% rating = option.ratings.where(dimension_id: dimension.id).first %>
-          <td>
-            <%= text_field_tag "[ratings][#{rating.id}][value]", rating.value %>
-          </td>
-        <% end %>
-      </tr>
+      <div class='make-ratings'>
+        <h3>Think about: <%= dimension.description %></h3>
+        <div class='row'>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <%= label_tag "[#{dimension.id}]best", "Which option is the best on this dimension?" %>
+              <%= select_tag "[#{dimension.id}]best",
+                options_from_collection_for_select(@decision_problem.options, :id, :description, dimension.best_option.try(:id)),
+                include_blank: true, class: 'form-control best-select' %>
+            </div>
+          </div>
+          <div class='col-md-6'>
+            <div class="form-group">
+              <%= label_tag "[#{dimension.id}]worst", "Which option is the worst on this dimension?" %>
+              <%= select_tag "[#{dimension.id}]worst",
+                options_from_collection_for_select(@decision_problem.options, :id, :description, dimension.worst_option.try(:id)),
+                include_blank: true, class: 'form-control worst-select' %>
+            </div>
+          </div>
+        </div>
+        <div class='slider-container'>
+          <% @decision_problem.options.each do |option| %>
+            <% rating = option.ratings.where(dimension_id: dimension.id).first %>
+            <div class='row option_<%= option.id %>'>
+              <div class='col-md-3'>
+                <%= option.description %>
+              </div>
+              <div class='col-md-9'>
+                <%= hidden_field_tag "[ratings][#{rating.id}][value]", rating.value %>
+                <div class='slider'></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
     <% end %>
-  </table>
-  <%= submit_tag %>
+  </div>
+  <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
+    specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+  <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+    Step 5: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
+  <% end %>
 <% end %>
