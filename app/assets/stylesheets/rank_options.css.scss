@@ -1,9 +1,13 @@
 #rank-options {
+  .instructions {
+    margin-bottom: 50px;
+  }
   h3 {
-    margin: 50px 10px 30px;
+    margin: 20px 10px 10px;
   }
   .sortable {
     display: inline-block;
+    margin-bottom: 20px;
     .option-ranker {
       margin: 10px auto;
       border-radius: 4px;
@@ -11,8 +15,5 @@
       background-color: #FF6E6E;
       padding: 8px 16px;
     }
-  }
-  hr {
-    margin: 50px 0;
   }
 }

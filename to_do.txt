@@ -1,30 +1,53 @@
-// review code
-// forget idea of double-nested attribs, just assign in controller
+rate attributes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 make a get started page as homepage. explain purpose, limitations
 
-styling
-  // make a logo
-
-  set up error section
-
-
-
-  icons
-    try after getting rid of theme vars
-
-
+set up error section
 
 make sure ratings get destroyed if either the option or the dimension gets deleted
 
 add some validations (ratings must be numbers)
 
-put in instructions
+are ratings right if options change? (add/delete)
 
-do some wireframing/storyboarding of ultimate look/feel
+don't use sequential ids
 
-hook up back/next buttons
+provide explantion for skipping option rating step if only 2 options
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

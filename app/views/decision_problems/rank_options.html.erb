@@ -12,7 +12,7 @@
       </p>
     </div>
   </div>
-  <%= form_tag save_option_ranks_decision_problem_path, method: :put do %>
+  <%= form_tag save_option_ranks_decision_problem_path, method: :put, class: 'narrow' do %>
     <% @decision_problem.dimensions.each do |dimension| %>
       <h3>Think about: <%= dimension.description %></h3>
       <% ratings = dimension.ratings.sort_by(&:rank) %>
@@ -22,7 +22,16 @@
           <input type='hidden' class='option-rank' data-rating='<%= rating.id %>' name='ratings[<%= rating.id %>][rank]' value='<%= rating.rank || (idx + 1) %>'/>
         <% end %>
       </div>
-      <hr>
     <% end %>
+    <div class='clearfix'></div>
+    <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
+      specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+    <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+      Step 5: Rate your options <%= fa('arrow-right', 'fa-right') %>
+    <% end %>
+
   <% end %>
 </div>
+
+
+

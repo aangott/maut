@@ -70,21 +70,20 @@ class DecisionProblemsController < ApplicationController
     @decision_problem.setup_ratings
   end
 
+  def save_option_ranks
+    @errors = []
+    update_ratings(params[:ratings])
+    if @errors.empty?
+      redirect_to action: "specify_ratings"
+    else
+      render action: "rank_options"
+    end
+  end
 
-
-
-
-
-
-
-
-
-  # GET /decision_problems/1/specify_ratings
   def specify_ratings
     @decision_problem = DecisionProblem.find(params[:id])
   end
 
-  # PUT /decision_problems/1/save_ratings
   def save_ratings
     @errors = []
     params[:ratings].each do |id, attribs|
@@ -156,5 +155,15 @@ class DecisionProblemsController < ApplicationController
   #   @decision_problem = DecisionProblem.find(params[:id])
   #   @decision_problem.destroy
   # end
+
+
+  def update_ratings(rating_params)
+    rating_params.each do |id, attribs|
+      rating = Rating.find(id)
+      rating.update_attributes(attribs)
+      @errors << rating.errors.full_messages if rating.errors.any?
+    end
+  end
+  private :update_ratings
 
 end
