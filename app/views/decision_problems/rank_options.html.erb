@@ -14,7 +14,7 @@
   </div>
   <%= form_tag save_option_ranks_decision_problem_path, method: :put, class: 'narrow' do %>
     <% @decision_problem.dimensions.each do |dimension| %>
-      <h3>Think about: <%= dimension.description %></h3>
+      <h3><%= dimension.description %></h3>
       <% ratings = dimension.sorted_ratings %>
       <div class='sortable'>
         <% ratings.each_with_index do |rating, idx| %>
@@ -31,6 +31,3 @@
     <% end %>
   <% end %>
 </div>
-
-
-

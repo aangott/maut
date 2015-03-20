@@ -73,7 +73,6 @@ class DecisionProblemsController < ApplicationController
   def save_option_ranks
     @decision_problem = DecisionProblem.find(params[:id])
     @errors = []
-
     update_ratings(params[:ratings])
     @decision_problem.update_ratings_by_rank
     if @errors.empty?
@@ -88,12 +87,10 @@ class DecisionProblemsController < ApplicationController
   end
 
   def save_ratings
+    @decision_problem = DecisionProblem.find(params[:id])
     @errors = []
-    params[:ratings].each do |id, attribs|
-      rating = Rating.find(id)
-      rating.update_attributes(attribs)
-      @errors << rating.errors.full_messages if rating.errors.any?
-    end
+    update_ratings(params[:ratings])
+    @decision_problem.update_ratings_by_value
     if @errors.empty?
       redirect_to action: "rank_dimensions"
     else

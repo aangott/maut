@@ -10,11 +10,15 @@
         rating of the option that's best on the dimension.
       </p>
       <p>
-        For each dimension, your lowest-ranked option has been locked to a score
-        of 0, and your highest-ranked option has been locked to a score of 100.
-        Your other options are listed in rank-order. For these options, drag the
-        blue square to increase or decrease the length of the bar to reflect that
-        option's rating on that dimension.
+        For each dimension, your options are listed in the rank order you
+        specified on the last step. Your lowest-ranked option has been locked to
+        a length of 0, and your highest-ranked option has been locked to a
+        length of 100.
+      </p>
+      <p>
+        For the rest of your options, drag the blue square to
+        increase or decrease the length of the bar to reflect your rating of
+        that option on that dimension.
       </p>
       <p>
        For example, for an option that's 60% as good as the best option on a given dimension,
@@ -24,7 +28,7 @@
   </div>
   <%= form_tag save_ratings_decision_problem_path, method: :put do %>
     <% @decision_problem.dimensions.each do |dimension| %>
-      <h3>Think about: <%= dimension.description %></h3>
+      <h3><%= dimension.description %></h3>
       <div class='rating-container' data-dimension='<%= dimension.id %>'>
       </div>
       <% dimension.ratings.each do |rating| %>
