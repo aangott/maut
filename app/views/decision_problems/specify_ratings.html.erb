@@ -20,7 +20,6 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
 <%= form_tag save_ratings_decision_problem_path, method: :put do %>
   <% @decision_problem.dimensions.each do |dimension| %>
     <h3>Think about: <%= dimension.description %></h3>
-    <% ratings = dimension.ratings.sort_by(&:rank) %>
     <div class='rating-container' data-dimension='<%= dimension.id %>'>
     </div>
   <% end %>
@@ -31,5 +30,5 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
   <% end %>
 <% end %>
 <script>
-  Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :ratings).html_safe %>;
+  Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :sorted_ratings).html_safe %>;
 </script>

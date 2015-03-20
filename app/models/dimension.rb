@@ -5,18 +5,6 @@ class Dimension < ActiveRecord::Base
   has_many :ratings
   has_many :options, through: :ratings
 
-  def best_option
-    sorted_ratings = ratings.select { |r| r.value.present? }.sort_by(&:value)
-    return unless sorted_ratings.any?
-    sorted_ratings.first.option
-  end
-
-  def worst_option
-    sorted_ratings = ratings.select { |r| r.value.present? }.sort_by(&:value)
-    return unless sorted_ratings.any?
-    sorted_ratings.last.option
-  end
-
   def least_important_dimension
     # max rank = least important, where most important gets rank of 1
     max_rank = dimensions.map(&:rank).max
@@ -24,11 +12,8 @@ class Dimension < ActiveRecord::Base
     dimensions.detect { |d| d.rank == max_rank }
   end
 
-
-
-
-
-
-
+  def sorted_ratings
+    ratings.sort_by(&:rank)
+  end
 
 end

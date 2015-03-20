@@ -18,15 +18,22 @@ $ ->
     pullSize: 20
 
     initialize: ->
-      @maxBarWidth = (@containerWidth - (2 * @containerPadding))
       @ratingsByDimension = Maut.ratingsByDimension
+      @setupCalculatedInstanceVars()
       @setupDimensions()
+
+    setupCalculatedInstanceVars: ->
+      @maxBarWidth = (@containerWidth - (2 * @containerPadding))
+      @widthScale = d3.scale
+        .linear()
+        .domain([@minRating, @maxRating])
+        .range([@minBarWidth, @maxBarWidth])
 
     setupDimensions: ->
       for dimension in @ratingsByDimension
         console.log(dimension.description)
         container = d3.select("div[data-dimension='#{dimension.id}'")
-        @setupRatings(container, dimension.ratings)
+        @setupRatings(container, dimension.sorted_ratings)
 
     setupRatings: (container, ratings) ->
       console.log(ratings)
@@ -35,12 +42,6 @@ $ ->
         .ordinal()
         .domain(d3.range(ratings.length))
         .rangeRoundBands([0, @containerHeight], @barPadding)
-
-      widthScale = d3.scale
-        .linear()
-        .domain([@minRating, @maxRating])
-        .range([@minBarWidth, @maxBarWidth])
-
 
       # set up empty svg
       svg = container.append('svg')
@@ -73,7 +74,7 @@ $ ->
         )
         .duration(@transitionDuration)
         .attr('width', (d) =>
-          widthScale(if d.value == null then @defaultRating else d.value)
+          @widthScale(if d.value == null then @defaultRating else d.value)
         )
         .attr('fill', (d) =>
           @colorFromRating(if d.value == null then @defaultRating else d.value)
@@ -81,19 +82,6 @@ $ ->
 
     colorFromRating: (rating) ->
       "hsl(#{rating}, 72%, 65%)"
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   Maut.SpecifyRatings.initialize()
 
