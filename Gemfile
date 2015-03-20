@@ -22,6 +22,8 @@ gem 'jquery-ui-rails'
 gem 'nested_form'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'font-awesome-sass', '~> 4.3.0'
+gem 'd3-rails'
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

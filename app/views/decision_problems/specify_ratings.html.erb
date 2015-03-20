@@ -1,60 +1,35 @@
 Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
-<h2>Step 4: Rate your options</h2>
+<h2>Step 5: Rate your options</h2>
 <div class='instructions narrow panel panel-default'>
   <div class='panel-body'>
     <p>
       Now it's time to rate each of your options on each of the dimensions
-      that matter to you.  For each dimension, first choose which option is the
-      best on that dimension, and which option is the worst.  The sliders for
-      those options will be locked down. Then, move the sliders on the remaining
-      options to reflect where they rate between the best and worst options. If
-       you only have two options, you won't need to do this last step.
+      that matter to you. We'll use a rating scale of 0-100, where 0 is defined
+      as the rating of the option that's worst on the dimension, and 100 is the
+      rating of the option that's best on the dimension.
+    </p>
+    <p>
+      For each dimension, your lowest-ranked option has been locked to a score
+      of 0, and your highest-ranked option has been locked to a score of 100.
+      Your other options are listed in rank-order. For these options, drag the
+      blue box to increase or decrease the length of the bar to reflect that
+      option's rating on that dimension.
     </p>
   </div>
 </div>
 <%= form_tag save_ratings_decision_problem_path, method: :put do %>
-  <div class='ratings-group'>
-    <% @decision_problem.dimensions.each do |dimension| %>
-      <div class='make-ratings'>
-        <h3>Think about: <%= dimension.description %></h3>
-        <div class='row'>
-          <div class='col-md-6'>
-            <div class="form-group">
-              <%= label_tag "[#{dimension.id}]best", "Which option is the best on this dimension?" %>
-              <%= select_tag "[#{dimension.id}]best",
-                options_from_collection_for_select(@decision_problem.options, :id, :description, dimension.best_option.try(:id)),
-                include_blank: true, class: 'form-control best-select' %>
-            </div>
-          </div>
-          <div class='col-md-6'>
-            <div class="form-group">
-              <%= label_tag "[#{dimension.id}]worst", "Which option is the worst on this dimension?" %>
-              <%= select_tag "[#{dimension.id}]worst",
-                options_from_collection_for_select(@decision_problem.options, :id, :description, dimension.worst_option.try(:id)),
-                include_blank: true, class: 'form-control worst-select' %>
-            </div>
-          </div>
-        </div>
-        <div class='slider-container'>
-          <% @decision_problem.options.each do |option| %>
-            <% rating = option.ratings.where(dimension_id: dimension.id).first %>
-            <div class='row option_<%= option.id %>'>
-              <div class='col-md-3'>
-                <%= option.description %>
-              </div>
-              <div class='col-md-9'>
-                <%= hidden_field_tag "[ratings][#{rating.id}][value]", rating.value %>
-                <div class='slider'></div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
+  <% @decision_problem.dimensions.each do |dimension| %>
+    <h3>Think about: <%= dimension.description %></h3>
+    <% ratings = dimension.ratings.sort_by(&:rank) %>
+    <div class='rating-container' data-dimension='<%= dimension.id %>'>
+    </div>
+  <% end %>
   <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
     specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
   <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
     Step 5: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
   <% end %>
 <% end %>
+<script>
+  Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :ratings).html_safe %>;
+</script>

@@ -71,8 +71,11 @@ class DecisionProblemsController < ApplicationController
   end
 
   def save_option_ranks
+    @decision_problem = DecisionProblem.find(params[:id])
     @errors = []
+
     update_ratings(params[:ratings])
+    @decision_problem.update_ratings_by_rank
     if @errors.empty?
       redirect_to action: "specify_ratings"
     else

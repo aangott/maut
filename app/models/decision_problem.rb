@@ -43,4 +43,13 @@ class DecisionProblem < ActiveRecord::Base
     end
   end
 
+  # make sure ratings conform to ranks when ranks change
+  def update_ratings_by_rank
+    dimensions.each do |dimension|
+      dim_ratings = dimension.ratings.sort_by(&:rank)
+      dim_ratings.first.update_attribute(:value, 100)
+      dim_ratings.last.update_attribute(:value, 0)
+    end
+  end
+
 end
