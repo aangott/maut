@@ -1,34 +1,43 @@
-Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
-<h2>Step 5: Rate your options</h2>
-<div class='instructions narrow panel panel-default'>
-  <div class='panel-body'>
-    <p>
-      Now it's time to rate each of your options on each of the dimensions
-      that matter to you. We'll use a rating scale of 0-100, where 0 is defined
-      as the rating of the option that's worst on the dimension, and 100 is the
-      rating of the option that's best on the dimension.
-    </p>
-    <p>
-      For each dimension, your lowest-ranked option has been locked to a score
-      of 0, and your highest-ranked option has been locked to a score of 100.
-      Your other options are listed in rank-order. For these options, drag the
-      blue box to increase or decrease the length of the bar to reflect that
-      option's rating on that dimension.
-    </p>
-  </div>
-</div>
-<%= form_tag save_ratings_decision_problem_path, method: :put do %>
-  <% @decision_problem.dimensions.each do |dimension| %>
-    <h3>Think about: <%= dimension.description %></h3>
-    <div class='rating-container' data-dimension='<%= dimension.id %>'>
+<div id='specify-ratings'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 5: Rate your options</h2>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        Now it's time to rate each of your options on each of the dimensions
+        that matter to you. We'll use a rating scale of 0-100, where 0 is defined
+        as the rating of the option that's worst on the dimension, and 100 is the
+        rating of the option that's best on the dimension.
+      </p>
+      <p>
+        For each dimension, your lowest-ranked option has been locked to a score
+        of 0, and your highest-ranked option has been locked to a score of 100.
+        Your other options are listed in rank-order. For these options, drag the
+        blue square to increase or decrease the length of the bar to reflect that
+        option's rating on that dimension.
+      </p>
+      <p>
+       For example, for an option that's 60% as good as the best option on a given dimension,
+       drag its bar to be 60% of the length of the best option's bar.
+      </p>
     </div>
+  </div>
+  <%= form_tag save_ratings_decision_problem_path, method: :put do %>
+    <% @decision_problem.dimensions.each do |dimension| %>
+      <h3>Think about: <%= dimension.description %></h3>
+      <div class='rating-container' data-dimension='<%= dimension.id %>'>
+      </div>
+      <% dimension.ratings.each do |rating| %>
+        <input type='hidden' data-rating='<%= rating.id %>' name='ratings[<%= rating.id %>][value]' value='<%= rating.value || 50 %>'/>
+      <% end %>
+    <% end %>
+    <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
+      specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+    <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+      Step 5: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
+    <% end %>
   <% end %>
-  <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
-    specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
-  <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
-    Step 5: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
-  <% end %>
-<% end %>
-<script>
-  Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :sorted_ratings).html_safe %>;
-</script>
+  <script>
+    Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :sorted_ratings).html_safe %>;
+  </script>
+</div>

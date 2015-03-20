@@ -13,7 +13,8 @@ class Dimension < ActiveRecord::Base
   end
 
   def sorted_ratings
-    ratings.sort_by(&:rank)
+    ratings_with_rank, ratings_no_rank = ratings.partition { |r| r.rank.present? }
+    ratings_with_rank.sort_by(&:rank) + ratings_no_rank
   end
 
 end

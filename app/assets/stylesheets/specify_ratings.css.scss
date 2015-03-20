@@ -1,8 +1,8 @@
-.make-ratings:not(:last-child) {
-  border-bottom: 1px solid #ddd;
-}
-
-.make-ratings {
-  padding-top: 50px;
-  padding-bottom: 50px;
+#specify-ratings {
+  svg {
+    .pull {
+      fill: #5bc0de;
+      cursor: ew-resize;
+    }
+  }
 }

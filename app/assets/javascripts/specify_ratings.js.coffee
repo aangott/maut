@@ -133,6 +133,9 @@ $ ->
       bar.attr('width', Math.max(@minBarWidth, Math.min(@maxBarWidth, d3.event.x - @pullSize/2)))
       bar.attr('fill', @colorFromRating(@widthToScore(bar.attr('width'))))
 
+      input = d3.select("input[data-rating='#{d.id}']")
+      input.attr('value', (Math.round(@widthToScore(bar.attr('width')))))
+
     getValue: (d) ->
       if d.value == null
         @defaultRating
