@@ -7,6 +7,9 @@ Maut::Application.routes.draw do
       get :specify_options
       put :save_options
 
+      get :rank_options
+      put :save_option_ranks
+
       get :specify_ratings
       put :save_ratings
 

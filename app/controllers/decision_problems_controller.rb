@@ -1,11 +1,9 @@
 class DecisionProblemsController < ApplicationController
 
-  # GET /decision_problems/new
   def new
     @decision_problem = DecisionProblem.new
   end
 
-  # POST /decision_problems
   def create
     @decision_problem = DecisionProblem.new(params[:decision_problem])
 
@@ -16,12 +14,10 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # GET /decision_problems/1/edit
   def edit
     @decision_problem = DecisionProblem.find(params[:id])
   end
 
-  # PUT /decision_problems/1
   def update
     @decision_problem = DecisionProblem.find(params[:id])
     if @decision_problem.update_attributes(params[:decision_problem])
@@ -31,7 +27,6 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # GET /decision_problems/1/specify_dimensions
   def specify_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
     if @decision_problem.dimensions.empty?
@@ -41,7 +36,6 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # PUT /decision_problems/1/save_dimensions
   def save_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
 
@@ -52,7 +46,6 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # GET /decision_problems/1/specify_options
   def specify_options
     @decision_problem = DecisionProblem.find(params[:id])
     if @decision_problem.options.empty?
@@ -62,21 +55,33 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # PUT /decision_problems/1/save_options
   def save_options
     @decision_problem = DecisionProblem.find(params[:id])
 
     if @decision_problem.update_attributes(params[:decision_problem])
-      redirect_to action: "specify_ratings"
+      redirect_to action: "rank_options"
     else
       render action: "specify_options"
     end
   end
 
+  def rank_options
+    @decision_problem = DecisionProblem.find(params[:id])
+    @decision_problem.setup_ratings
+  end
+
+
+
+
+
+
+
+
+
+
   # GET /decision_problems/1/specify_ratings
   def specify_ratings
     @decision_problem = DecisionProblem.find(params[:id])
-    @decision_problem.setup_ratings
   end
 
   # PUT /decision_problems/1/save_ratings

@@ -1,0 +1,18 @@
+#rank-options {
+  h3 {
+    margin: 50px 10px 30px;
+  }
+  .sortable {
+    display: inline-block;
+    .option-ranker {
+      margin: 10px auto;
+      border-radius: 4px;
+      width: 300px;
+      background-color: #FF6E6E;
+      padding: 8px 16px;
+    }
+  }
+  hr {
+    margin: 50px 0;
+  }
+}

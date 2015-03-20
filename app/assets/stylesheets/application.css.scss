@@ -58,17 +58,11 @@ th {
 
 .instructions {
   margin-top: 20px;
+  text-align: left;
 }
 
 .example {
-  display: inline-block;
-  color: #4E5D6C;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  padding: 0 2px;
-  margin: 2px;
-  background-color: #ddd;
-  line-height: 16px;
+  font-weight: bold;
 }
 
 .btn-info {
