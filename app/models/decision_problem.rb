@@ -52,4 +52,8 @@ class DecisionProblem < ActiveRecord::Base
     end
   end
 
+  def dimensions_json
+    dimensions.to_json(include: { sorted_ratings: { methods: :option_description } })
+  end
+
 end

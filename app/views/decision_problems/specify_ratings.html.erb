@@ -38,6 +38,6 @@
     <% end %>
   <% end %>
   <script>
-    Maut.ratingsByDimension = <%= @decision_problem.dimensions.to_json(include: :sorted_ratings).html_safe %>;
+    Maut.ratingsByDimension = <%= @decision_problem.dimensions_json.html_safe %>;
   </script>
 </div>

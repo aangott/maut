@@ -3,7 +3,8 @@ $ ->
 
     containerWidth: 900
     containerHeight: 300
-    containerPadding: 20
+    containerPaddingLeft: 150
+    containerPaddingRight: 20
 
     minRating: 0
     maxRating: 100
@@ -17,13 +18,15 @@ $ ->
 
     pullSize: 20
 
+    labelPaddingTop: 5
+
     initialize: ->
       @ratingsByDimension = Maut.ratingsByDimension
       @setupCalculatedInstanceVars()
       @setupDimensions()
 
     setupCalculatedInstanceVars: ->
-      @maxBarWidth = (@containerWidth - (2 * @containerPadding))
+      @maxBarWidth = (@containerWidth - (@containerPaddingLeft + @containerPaddingRight))
       @widthScale = d3.scale
         .linear()
         .domain([@minRating, @maxRating])
@@ -35,13 +38,10 @@ $ ->
 
     setupDimensions: ->
       for dimension in @ratingsByDimension
-        console.log(dimension.description)
         container = d3.select("div[data-dimension='#{dimension.id}'")
         @setupRatings(container, dimension.sorted_ratings)
 
     setupRatings: (container, ratings) ->
-      console.log(ratings)
-
       yScale = d3.scale
         .ordinal()
         .domain(d3.range(ratings.length))
@@ -63,13 +63,27 @@ $ ->
         .attr('data-rating', (d) ->
           d.id
         )
-        .attr('x', @containerPadding)
+        .attr('x', @containerPaddingLeft)
         .attr('y', (d, i) ->
           yScale(i)
         )
         .attr('height', yScale.rangeBand())
         .attr('width', 0)
         .attr('fill', 'hsl(0, 50%, 43%)')
+
+      # create a label for each bar
+      svg.selectAll('text')
+        .data(ratings)
+        .enter()
+        .append('text')
+        .text((d) ->
+          d.option_description
+        )
+        .attr('x', 0)
+        .attr('y', (d, i) =>
+          yScale(i) + (yScale.rangeBand() / 2) + @labelPaddingTop
+        )
+        .attr('fill', 'white')
 
       # create a pull on each bar, but at far left of svg
       pulls = svg.selectAll('rect.pull')
@@ -82,7 +96,7 @@ $ ->
         .attr('data-rating', (d) ->
           d.id
         )
-        .attr('x', @containerPadding - @pullSize / 2)
+        .attr('x', @containerPaddingLeft - @pullSize / 2)
         .attr('y', (d, i) =>
           yScale(i) + (yScale.rangeBand() / 2) - (@pullSize / 2)
         )
@@ -115,7 +129,7 @@ $ ->
         )
         .duration(@transitionDuration)
         .attr('x', (d) =>
-          @widthScale(@getValue(d)) + @containerPadding - (@pullSize / 2);
+          @widthScale(@getValue(d)) + @containerPaddingLeft - (@pullSize / 2);
         )
 
       # make pulls draggable + set up listener
