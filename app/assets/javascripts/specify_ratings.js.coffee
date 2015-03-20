@@ -76,6 +76,7 @@ $ ->
         .data(ratings)
         .enter()
         .append('text')
+        .classed('label', true)
         .text((d) ->
           d.option_description
         )
@@ -83,7 +84,6 @@ $ ->
         .attr('y', (d, i) =>
           yScale(i) + (yScale.rangeBand() / 2) + @labelPaddingTop
         )
-        .attr('fill', 'white')
 
       # create a pull on each bar, but at far left of svg
       pulls = svg.selectAll('rect.pull')
@@ -109,6 +109,7 @@ $ ->
             false
         )
 
+
       # transition the bars to their proper width
       bars.transition()
         .delay((d, i) =>
@@ -131,6 +132,21 @@ $ ->
         .attr('x', (d) =>
           @widthScale(@getValue(d)) + @containerPaddingLeft - (@pullSize / 2);
         )
+        .each('end', ->
+          pull = d3.select(@)
+          return unless pull.classed('locked')
+          svg.append('image')
+            .classed('lock', true)
+            .attr('x', pull.attr('x'))
+            .attr('y', +(pull.attr('y')) + 2)
+            .attr('height', 15)
+            .attr('width', pull.attr('width'))
+            .attr('xlink:href', '/assets/lock.png')
+            .attr('opacity', 0)
+            .transition()
+              .attr('opacity', 1)
+              .duration(1000)
+        )
 
       # make pulls draggable + set up listener
       drag = d3.behavior.drag()
@@ -141,11 +157,17 @@ $ ->
       pull = d3.select(".pull[data-rating='#{d.id}']")
       if pull.classed('locked')
         return
-      pull.attr('x', Math.max(@minBarWidth + @pullSize/2, Math.min(@maxBarWidth + @pullSize/2, d3.event.x)))
+      pull.attr('x', Math.max(
+        @containerPaddingLeft + @minBarWidth - @pullSize/2,
+        Math.min(@containerPaddingLeft + @maxBarWidth - @pullSize/2, d3.event.x)
+      ))
 
       bar = d3.select(".bar[data-rating='#{d.id}']")
-      bar.attr('width', Math.max(@minBarWidth, Math.min(@maxBarWidth, d3.event.x - @pullSize/2)))
       bar.attr('fill', @colorFromRating(@widthToScore(bar.attr('width'))))
+      bar.attr('width', Math.max(
+        @minBarWidth,
+        Math.min(@maxBarWidth, d3.event.x - @containerPaddingLeft + @pullSize/2)
+      ))
 
       input = d3.select("input[data-rating='#{d.id}']")
       input.attr('value', (Math.round(@widthToScore(bar.attr('width')))))
