@@ -1,11 +1,44 @@
-<h1>Weight dimensions</h1>
-Description: <%= @decision_problem.description %>
-
-<%= nested_form_for @decision_problem, url: save_dimension_weights_decision_problem_path do |f| %>
-  <%= f.fields_for :dimensions do |dimension_form| %>
-    <% disabled = dimension_form.object == @decision_problem.least_important_dimension ? true : false %>
-    <%= dimension_form.text_field :weight, disabled: disabled %>
-    <span><%= dimension_form.object.description %></span>
+<div id='weight-dimensions'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 7: Weight the dimensions</h2>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        Now you will rate each dimension on how important it is to you.  We'll use
+        a rating scale of 10-100, where 10 is defined as the rating of the
+        dimension that's least important to you, and 100 is defined as the rating
+        of the dimension that's most important to you.
+      </p>
+      <p>
+        The dimensions you're considering are listed below in the rank order you
+        specified on the last step. The lowest-ranked dimension has been locked
+        to a length of 10, and your highest-ranked dimension has been locked to
+        a length of 100.
+      </p>
+      <p>
+        For the rest of the dimensions, drag the blue square to increase or
+        decrease the length of the bar to reflect how important that dimension
+        is to you relative to the other dimensions.
+      </p>
+      <p>
+       For example, for a dimension that's 60% as important to you as the most
+       important dimension, drag its bar to be 60% of the length of the top-ranked
+       dimension's bar.
+      </p>
+    </div>
+  </div>
+  <%= form_tag save_dimension_weights_decision_problem_path, method: :put do %>
+    <div class='rating-container'></div>
+    <% @decision_problem.dimensions.each do |dimension| %>
+      <input type='hidden' data-dimension='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][value]' value='<%= dimension.weight || 50 %>'/>
+    <% end %>
+    <%= link_to fa('arrow-left', 'fa-left') + " Step 6: Rank the dimensions",
+      rank_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+    <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+      Step 8: View recommendation <%= fa('arrow-right', 'fa-right') %>
+    <% end %>
   <% end %>
-  <%= f.submit %>
-<% end %>
+  <script>
+    Maut.dimensionsForWeighting = <%= @decision_problem.dimensions.to_json.html_safe %>;
+  </script>
+</div>

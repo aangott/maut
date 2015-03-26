@@ -117,12 +117,10 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # GET /decision_problems/1/weight_dimensions
   def weight_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
   end
 
-  # PUT /decision_problems/1/save_dimension_weights
   def save_dimension_weights
     @decision_problem = DecisionProblem.find(params[:id])
     if @decision_problem.update_attributes(params[:decision_problem])

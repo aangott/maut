@@ -35,7 +35,7 @@
         <input type='hidden' data-rating='<%= rating.id %>' name='ratings[<%= rating.id %>][value]' value='<%= rating.value || 50 %>'/>
       <% end %>
     <% end %>
-    <%= link_to fa('arrow-left', 'fa-left') + " Step 4: Rank your optiosn",
+    <%= link_to fa('arrow-left', 'fa-left') + " Step 4: Rank your options",
       rank_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
     <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
       Step 6: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
