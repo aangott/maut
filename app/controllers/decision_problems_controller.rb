@@ -98,15 +98,19 @@ class DecisionProblemsController < ApplicationController
     end
   end
 
-  # GET /decision_problems/1/rank_dimensions
   def rank_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
   end
 
-  # PUT /decision_problems/1/save_dimension_ranks
   def save_dimension_ranks
     @decision_problem = DecisionProblem.find(params[:id])
-    if @decision_problem.update_attributes(params[:decision_problem])
+    @errors = []
+    params[:dimensions].each do |id, attribs|
+      dimension = Dimension.find(id)
+      dimension.update_attributes(attribs)
+      @errors << dimension.errors.full_messages if dimension.errors.any?
+    end
+    if @errors.empty?
       redirect_to action: "weight_dimensions"
     else
       render action: "rank_dimensions"

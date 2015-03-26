@@ -1,4 +1,4 @@
-#rank-options {
+.do-ranking {
   .instructions {
     margin-bottom: 50px;
   }
@@ -8,7 +8,7 @@
   .sortable {
     display: inline-block;
     margin-bottom: 20px;
-    .option-ranker {
+    .ranker {
       margin: 10px auto;
       border-radius: 4px;
       width: 300px;

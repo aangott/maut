@@ -1,10 +1,28 @@
-<h1>Rank dimensions</h1>
-Description: <%= @decision_problem.description %>
-
-<%= nested_form_for @decision_problem, url: save_dimension_ranks_decision_problem_path do |f| %>
-  <%= f.fields_for :dimensions do |dimension_form| %>
-    <%= dimension_form.text_field :rank %>
-    <span><%= dimension_form.object.description %></span>
+<div id='rank-dimensions' class='do-ranking'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 6: Rank the dimensions</h2>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        Now it's time to rank the dimensions in terms of how important they are
+        to you. Drag and drop each dimension to reflect its importance. The
+        dimension that is most important to you should be on the top, and the
+        dimension that is least important to you should be on the bottom.
+      </p>
+    </div>
+  </div>
+  <%= form_tag save_dimension_ranks_decision_problem_path, method: :put, class: 'narrow' do %>
+    <div class='sortable'>
+      <% @decision_problem.sorted_dimensions.each_with_index do |dimension, idx| %>
+        <div class='ranker' data-key='<%= dimension.id %>'><%= dimension.description %></div>
+        <input type='hidden' class='dimension-rank' data-key='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][rank]' value='<%= dimension.rank || (idx + 1) %>'/>
+      <% end %>
+    </div>
+    <div class='clearfix'></div>
+    <%= link_to fa('arrow-left', 'fa-left') + " Step 5: Rate your options",
+      specify_ratings_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+    <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
+      Step 7: Weight the dimensions <%= fa('arrow-right', 'fa-right') %>
+    <% end %>
   <% end %>
-  <%= f.submit %>
-<% end %>
+</div>

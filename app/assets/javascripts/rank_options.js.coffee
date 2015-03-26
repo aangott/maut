@@ -13,11 +13,11 @@ $ ->
       $('.sortable').disableSelection()
 
     updateRanks: ($sortedItem) ->
-      $groupElems = $sortedItem.closest('.sortable').find('.option-ranker')
+      $groupElems = $sortedItem.closest('.sortable').find('.ranker')
       $groupElems.each (idx, elem) ->
-        ratingId = $(elem).data('rating')
-        $ratingInput = $("input[data-rating='#{ratingId}']")
+        key = $(elem).data('key')
+        $rankInput = $("input[data-key='#{key}']")
         rank = idx + 1  # want ranks to be 1-based
-        $ratingInput.val(rank)
+        $rankInput.val(rank)
 
   Maut.RankOptions.initialize()

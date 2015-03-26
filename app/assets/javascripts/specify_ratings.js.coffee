@@ -21,7 +21,7 @@ $ ->
     labelPaddingTop: 5
 
     initialize: ->
-      @ratingsByDimension = Maut.ratingsByDimension
+      @ratingsByDimension = Maut.ratingsByDimension || []
       @setupCalculatedInstanceVars()
       @setupDimensions()
 
