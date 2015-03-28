@@ -6,8 +6,8 @@ $ ->
 
     enableSortable: ->
       $('.sortable').sortable
-        axis: 'y'
         containment: 'parent'
+        placeholder: 'placeholder'
         stop: (evt, ui) =>
           @updateRanks(ui.item)
       $('.sortable').disableSelection()

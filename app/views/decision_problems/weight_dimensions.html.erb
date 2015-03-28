@@ -1,4 +1,4 @@
-<div id='weight-dimensions'>
+<div id='weight-dimensions' class='do-rating'>
   Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
   <h2>Step 7: Weight the dimensions</h2>
   <div class='instructions narrow panel panel-default'>
@@ -28,9 +28,9 @@
     </div>
   </div>
   <%= form_tag save_dimension_weights_decision_problem_path, method: :put do %>
-    <div class='rating-container'></div>
+    <div class='dimension-rating-container'></div>
     <% @decision_problem.dimensions.each do |dimension| %>
-      <input type='hidden' data-dimension='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][value]' value='<%= dimension.weight || 50 %>'/>
+      <input type='hidden' data-rating='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][weight]' value='<%= dimension.weight || 50 %>'/>
     <% end %>
     <%= link_to fa('arrow-left', 'fa-left') + " Step 6: Rank the dimensions",
       rank_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>

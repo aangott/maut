@@ -62,6 +62,12 @@ class DecisionProblem < ActiveRecord::Base
     end
   end
 
+  def update_dimension_weights_by_rank
+    dims_by_rank = dimensions.sort_by(&:rank)
+    dims_by_rank.first.update_attribute(:weight, 100)
+    dims_by_rank.last.update_attribute(:weight, 10)
+  end
+
   def dimensions_json
     dimensions.to_json(include: { sorted_ratings: { methods: :option_description } })
   end

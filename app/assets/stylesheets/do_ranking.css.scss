@@ -8,6 +8,10 @@
   .sortable {
     display: inline-block;
     margin-bottom: 20px;
+    .placeholder {
+      height: 39px;
+      margin: 10px;
+    }
     .ranker {
       margin: 10px auto;
       border-radius: 4px;

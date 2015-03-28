@@ -105,11 +105,8 @@ class DecisionProblemsController < ApplicationController
   def save_dimension_ranks
     @decision_problem = DecisionProblem.find(params[:id])
     @errors = []
-    params[:dimensions].each do |id, attribs|
-      dimension = Dimension.find(id)
-      dimension.update_attributes(attribs)
-      @errors << dimension.errors.full_messages if dimension.errors.any?
-    end
+    update_dimensions(params[:dimensions])
+    @decision_problem.update_dimension_weights_by_rank
     if @errors.empty?
       redirect_to action: "weight_dimensions"
     else
@@ -123,6 +120,8 @@ class DecisionProblemsController < ApplicationController
 
   def save_dimension_weights
     @decision_problem = DecisionProblem.find(params[:id])
+    @errors = []
+    update_dimensions(params[:dimensions])
     if @decision_problem.update_attributes(params[:decision_problem])
       redirect_to action: "view_scores"
     else
@@ -167,5 +166,14 @@ class DecisionProblemsController < ApplicationController
     end
   end
   private :update_ratings
+
+  def update_dimensions(dimension_params)
+    dimension_params.each do |id, attribs|
+      dimension = Dimension.find(id)
+      dimension.update_attributes(attribs)
+      @errors << dimension.errors.full_messages if dimension.errors.any?
+    end
+  end
+  private :update_dimensions
 
 end
