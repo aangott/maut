@@ -1,14 +1,17 @@
-<h1>View scores</h1>
-Description: <%= @decision_problem.description %>
-<table>
-  <tr>
-    <th>Option</th>
-    <th>Score</th>
-  </tr>
-  <% @options.each do |option| %>
-    <tr>
-      <td><%= option.description %></td>
-      <td><%= option.score %></td>
-    </tr>
-  <% end %>
-</table>
+<div id='view-scores'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 8: View recommendations</h2>
+  <div class='scores-container'></div>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        Commentary goes here
+      </p>
+    </div>
+  </div>
+  <%= link_to fa('arrow-left', 'fa-left') + " Step 7: Weight the dimensions",
+      weight_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+  <script>
+    Maut.optionScores = <%= @decision_problem.option_scores_json.html_safe %>;
+  </script>
+</div>

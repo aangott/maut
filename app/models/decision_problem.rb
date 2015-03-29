@@ -1,7 +1,5 @@
 class DecisionProblem < ActiveRecord::Base
 
-  # after_save :weight_least_important_dimension
-
   has_many :options
   has_many :dimensions
 
@@ -20,20 +18,6 @@ class DecisionProblem < ActiveRecord::Base
   def description_blank(attribs)
     attribs[:id].blank? && attribs[:description].blank?
   end
-
-  # def weight_least_important_dimension
-  #   if least_important_dimension.present?
-  #     least_important_dimension.update_attributes(weight: MINIMUM_DIMENSION_WEIGHT)
-  #   end
-  #   return true # since this is a callback
-  # end
-
-  # def least_important_dimension
-  #   # max rank = least important, where most important gets rank of 1
-  #   max_rank = dimensions.map(&:rank).max
-  #   return unless max_rank
-  #   dimensions.detect { |d| d.rank == max_rank }
-  # end
 
   def setup_ratings
     options.each do |option|
@@ -75,6 +59,10 @@ class DecisionProblem < ActiveRecord::Base
   def sorted_dimensions
     dims_with_rank, dims_no_rank = dimensions.partition { |d| d.rank.present? }
     dims_with_rank.sort_by(&:rank) + dims_no_rank
+  end
+
+  def option_scores_json
+    options.sort_by(&:score).to_json(methods: :score)
   end
 
 end
