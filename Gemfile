@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.0'
+gem 'rails', '~> 3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
@@ -24,7 +24,6 @@ gem 'bootstrap-sass', '~> 3.3.3'
 gem 'font-awesome-sass', '~> 4.3.0'
 gem 'd3-rails'
 
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -44,7 +43,9 @@ gem 'd3-rails'
 group :development, :test do
   gem 'rspec-rails'
   gem 'pry-nav'
+  gem 'webrick'
 end
+
 
 
 
