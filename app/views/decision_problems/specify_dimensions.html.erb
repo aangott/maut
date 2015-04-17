@@ -25,14 +25,17 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
   <%= f.fields_for :dimensions do |dimension_form| %>
     <div class='row'>
       <div class='col-md-9'>
-        <%= dimension_form.text_field :description, class: 'form-control', placeholder: 'List a dimension that matters to you' %>
+        <%= dimension_form.text_field :description,
+          class: 'form-control nested-field',
+          placeholder: 'List a dimension that matters to you',
+          maxlength: '40' %>
       </div>
       <div class='col-md-3'>
         <%= dimension_form.link_to_remove 'Delete', class: 'btn btn-danger delete' %>
       </div>
     </div>
   <% end %>
-  <%= f.link_to_add "Add another dimension", :dimensions, class: 'btn btn-success add' %>
+  <%= f.link_to_add "Add another dimension", :dimensions, class: 'btn btn-success add', data: { 'max-fields' => 10 } %>
   <div class='clearfix'></div>
   <%= link_to fa('arrow-left', 'fa-left') + " Step 1: Describe your decision",
     edit_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
