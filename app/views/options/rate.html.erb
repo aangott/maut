@@ -30,6 +30,11 @@
     <% @decision_problem.dimensions.each do |dimension| %>
       <h3><%= dimension.description %></h3>
       <div class='rating-container' data-dimension='<%= dimension.id %>'>
+        <table class='labels'>
+          <% dimension.sorted_ratings.each do |rating| %>
+            <tr><td><%= rating.option_description %></td></tr>
+          <% end %>
+        </table>
       </div>
       <% dimension.ratings.each do |rating| %>
         <input type='hidden' data-rating='<%= rating.id %>' name='ratings[<%= rating.id %>][value]' value='<%= rating.value || 50 %>'/>

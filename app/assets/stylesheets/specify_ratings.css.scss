@@ -2,15 +2,29 @@
   .instructions {
     margin-bottom: 50px;
   }
-  svg {
-    .pull {
-      fill: #5bc0de;
-      cursor: ew-resize;
+  .rating-container {
+    table.labels {
+      display: inline-block;
+      text-align: right;
+      width: 200px;
+      margin-right: 15px;
+      font-size: 16px;
+      padding-bottom: 5px;
+      tr {
+        min-height: 58.5px;
+        max-height: 58.5px;
+        height: 58.5px;
+        td {
+          padding: 0;
+        }
+      }
     }
-    .label {
-      fill: white;
-      font-size: 18px;
-      font-weight: normal;
+    svg {
+      display: inline-block;
+      .pull {
+        fill: #5bc0de;
+        cursor: ew-resize;
+      }
     }
   }
 }

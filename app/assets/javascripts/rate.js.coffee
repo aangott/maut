@@ -7,7 +7,7 @@ $ ->
 
       @barHeight = 60
 
-      @containerWidth = 900
+      @containerWidth = 750
       @containerHeight = @barHeight * @numOptions
 
       @minRating = 0
