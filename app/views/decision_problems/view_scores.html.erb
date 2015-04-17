@@ -10,7 +10,7 @@
     </div>
   </div>
   <%= link_to fa('arrow-left', 'fa-left') + " Step 7: Weight the dimensions",
-      weight_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+      weight_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-left' %>
   <script>
     Maut.optionScores = <%= @decision_problem.option_scores_json.html_safe %>;
   </script>

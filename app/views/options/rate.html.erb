@@ -26,7 +26,7 @@
       </p>
     </div>
   </div>
-  <%= form_tag save_ratings_decision_problem_path, method: :put do %>
+  <%= form_tag save_ratings_decision_problem_options_path(@decision_problem), method: :put do %>
     <% @decision_problem.dimensions.each do |dimension| %>
       <h3><%= dimension.description %></h3>
       <div class='rating-container' data-dimension='<%= dimension.id %>'>
@@ -36,7 +36,7 @@
       <% end %>
     <% end %>
     <%= link_to fa('arrow-left', 'fa-left') + " Step 4: Rank your options",
-      rank_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+      rank_decision_problem_options_path(@decision_problem), class: 'btn btn-info pull-left' %>
     <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
       Step 6: Rank the dimensions <%= fa('arrow-right', 'fa-right') %>
     <% end %>

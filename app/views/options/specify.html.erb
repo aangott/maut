@@ -21,7 +21,7 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
   </div>
 </div>
 <%= render 'layouts/messages' %>
-<%= nested_form_for @decision_problem, url: save_options_decision_problem_path, html: { class: 'narrow' } do |f| %>
+<%= nested_form_for @decision_problem, url: save_decision_problem_options_path(@decision_problem), html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :options do |options_form| %>
     <div class='row'>
       <div class='col-md-9'>
@@ -39,7 +39,7 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
   <div class='clearfix'></div>
 
   <%= link_to fa('arrow-left', 'fa-left') + " Step 2: What matters to you?",
-    specify_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+    specify_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-left' %>
   <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
     Step 4: Rank your options <%= fa('arrow-right', 'fa-right') %>
   <% end %>

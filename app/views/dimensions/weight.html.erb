@@ -27,13 +27,13 @@
       </p>
     </div>
   </div>
-  <%= form_tag save_dimension_weights_decision_problem_path, method: :put do %>
+  <%= form_tag save_weights_decision_problem_dimensions_path(@decision_problem), method: :put do %>
     <div class='dimension-rating-container'></div>
     <% @decision_problem.dimensions.each do |dimension| %>
       <input type='hidden' data-rating='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][weight]' value='<%= dimension.weight || 50 %>'/>
     <% end %>
     <%= link_to fa('arrow-left', 'fa-left') + " Step 6: Rank the dimensions",
-      rank_dimensions_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+      rank_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-left' %>
     <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
       Step 8: View recommendation <%= fa('arrow-right', 'fa-right') %>
     <% end %>

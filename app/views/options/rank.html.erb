@@ -12,7 +12,7 @@
       </p>
     </div>
   </div>
-  <%= form_tag save_option_ranks_decision_problem_path, method: :put, class: 'narrow' do %>
+  <%= form_tag save_ranks_decision_problem_options_path(@decision_problem), method: :put, class: 'narrow' do %>
     <% @decision_problem.dimensions.each do |dimension| %>
       <h3><%= dimension.description %></h3>
       <% ratings = dimension.sorted_ratings %>
@@ -25,7 +25,7 @@
     <% end %>
     <div class='clearfix'></div>
     <%= link_to fa('arrow-left', 'fa-left') + " Step 3: What are your options?",
-      specify_options_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+      specify_decision_problem_options_path(@decision_problem), class: 'btn btn-info pull-left' %>
     <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
       Step 5: Rate your options <%= fa('arrow-right', 'fa-right') %>
     <% end %>

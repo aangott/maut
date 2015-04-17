@@ -11,7 +11,7 @@
       </p>
     </div>
   </div>
-  <%= form_tag save_dimension_ranks_decision_problem_path, method: :put, class: 'narrow' do %>
+  <%= form_tag save_ranks_decision_problem_dimensions_path(@decision_problem), method: :put, class: 'narrow' do %>
     <div class='sortable'>
       <% @decision_problem.sorted_dimensions.each_with_index do |dimension, idx| %>
         <div class='ranker' data-key='<%= dimension.id %>'><%= dimension.description %></div>
@@ -20,7 +20,7 @@
     </div>
     <div class='clearfix'></div>
     <%= link_to fa('arrow-left', 'fa-left') + " Step 5: Rate your options",
-      specify_ratings_decision_problem_path(@decision_problem), class: 'btn btn-info pull-left' %>
+      rate_decision_problem_options_path(@decision_problem), class: 'btn btn-info pull-left' %>
     <%= button_tag type: 'submit', class: 'btn btn-info pull-right' do %>
       Step 7: Weight the dimensions <%= fa('arrow-right', 'fa-right') %>
     <% end %>

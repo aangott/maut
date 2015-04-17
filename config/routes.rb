@@ -1,24 +1,29 @@
 Maut::Application.routes.draw do
   resources :decision_problems do
+
+    resources :dimensions, only: [] do
+      collection do
+        get :specify
+        put :save
+        get :rank
+        put :save_ranks
+        get :weight
+        put :save_weights
+      end
+    end
+
+    resources :options, only: [] do
+      collection do
+        get :specify
+        put :save
+        get :rank
+        put :save_ranks
+        get :rate
+        put :save_ratings
+      end
+    end
+
     member do
-      get :specify_dimensions
-      put :save_dimensions
-
-      get :specify_options
-      put :save_options
-
-      get :rank_options
-      put :save_option_ranks
-
-      get :specify_ratings
-      put :save_ratings
-
-      get :rank_dimensions
-      put :save_dimension_ranks
-
-      get :weight_dimensions
-      put :save_dimension_weights
-
       get :view_scores
     end
   end
