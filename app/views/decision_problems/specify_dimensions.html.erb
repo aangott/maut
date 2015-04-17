@@ -21,6 +21,7 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
     </p>
   </div>
 </div>
+<%= render 'layouts/messages' %>
 <%= nested_form_for @decision_problem, url: save_dimensions_decision_problem_path, html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :dimensions do |dimension_form| %>
     <div class='row'>

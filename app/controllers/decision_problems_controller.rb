@@ -38,11 +38,11 @@ class DecisionProblemsController < ApplicationController
 
   def save_dimensions
     @decision_problem = DecisionProblem.find(params[:id])
-
     if @decision_problem.update_attributes(params[:decision_problem])
       redirect_to action: "specify_options"
     else
-      render action: "specify_dimensions"
+      flash[:error] = @decision_problem.errors.full_messages.join(', ')
+      redirect_to action: "specify_dimensions"
     end
   end
 

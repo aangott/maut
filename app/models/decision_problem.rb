@@ -11,9 +11,18 @@ class DecisionProblem < ActiveRecord::Base
                                 allow_destroy: true,
                                 reject_if: :description_blank
 
+  validate :unique_dimension_descriptions
+
   MINIMUM_OPTIONS_COUNT = 2
   MINIMUM_DIMENSIONS_COUNT = 1
   MINIMUM_DIMENSION_WEIGHT = 10
+
+  def unique_dimension_descriptions
+    stripped_descriptions = dimensions.map { |d| d.description.strip }
+    unless stripped_descriptions.length == stripped_descriptions.uniq.length
+      errors[:base] << 'Your dimensions must be unique. No need to repeat yourself!'
+    end
+  end
 
   def description_blank(attribs)
     attribs[:id].blank? && attribs[:description].blank?

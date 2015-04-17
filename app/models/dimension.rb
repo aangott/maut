@@ -5,6 +5,8 @@ class Dimension < ActiveRecord::Base
   has_many :ratings
   has_many :options, through: :ratings
 
+  validates :description, uniqueness: { scope: :decision_problem_id }
+
   def least_important_dimension
     # max rank = least important, where most important gets rank of 1
     max_rank = dimensions.map(&:rank).max
