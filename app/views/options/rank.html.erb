@@ -6,10 +6,15 @@
       <p>
         Now it's time to rank your options on each of the dimensions
         that matter to you. For each dimension, drag and drop each option to
-        to reflect their ranking on that dimension.  The option that is
-        best on that dimension should be on top, and the option that is worst
-        should be on the bottom.
+        to their desirability on that dimension.  The option that is the most
+        desirable in terms of that dimension should be on top, and the option
+        that is worst should be on the bottom.
       </p>
+      <p>
+        For example, if the dimension were <span class='example'>Price</span>
+        and you prefer options with lower prices, the least expensive option
+        should go on the top of the stack, and the most expensive option should
+        go on the bottom.
     </div>
   </div>
   <%= form_tag save_ranks_decision_problem_options_path(@decision_problem), method: :put, class: 'narrow' do %>
