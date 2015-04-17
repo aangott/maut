@@ -11,16 +11,22 @@ class DecisionProblem < ActiveRecord::Base
                                 allow_destroy: true,
                                 reject_if: :description_blank
 
-  validate :unique_dimension_descriptions
+  validate :unique_dimension_descriptions, :unique_option_descriptions
 
   MINIMUM_OPTIONS_COUNT = 2
   MINIMUM_DIMENSIONS_COUNT = 1
   MINIMUM_DIMENSION_WEIGHT = 10
 
+
   def unique_dimension_descriptions
-    stripped_descriptions = dimensions.map { |d| d.description.strip }
-    unless stripped_descriptions.length == stripped_descriptions.uniq.length
+    unless unique_descriptions?(dimensions)
       errors[:base] << 'Your dimensions must be unique. No need to repeat yourself!'
+    end
+  end
+
+  def unique_option_descriptions
+    unless unique_descriptions?(options)
+      errors[:base] << 'Your options must be unique. No need to repeat yourself!'
     end
   end
 
@@ -73,5 +79,11 @@ class DecisionProblem < ActiveRecord::Base
   def option_scores_json
     options.sort_by(&:score).to_json(methods: :score)
   end
+
+  def unique_descriptions?(attribs)
+    stripped_descriptions = attribs.map(&:description).compact.map(&:strip)
+    stripped_descriptions.length == stripped_descriptions.uniq.length
+  end
+  private :unique_descriptions?
 
 end

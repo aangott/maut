@@ -5,6 +5,9 @@ class Option < ActiveRecord::Base
 
   accepts_nested_attributes_for :ratings
 
+  before_validation :strip_whitespace
+
+
   def score
     total = 0
     ratings.each do |rating|
@@ -12,5 +15,10 @@ class Option < ActiveRecord::Base
     end
     total
   end
+
+  def strip_whitespace
+    self.description = self.description.try(:strip)
+  end
+  private :strip_whitespace
 
 end

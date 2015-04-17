@@ -20,18 +20,22 @@ Your decision: <span class='your-decision'><%= @decision_problem.description %><
     </p>
   </div>
 </div>
+<%= render 'layouts/messages' %>
 <%= nested_form_for @decision_problem, url: save_options_decision_problem_path, html: { class: 'narrow' } do |f| %>
   <%= f.fields_for :options do |options_form| %>
     <div class='row'>
       <div class='col-md-9'>
-        <%= options_form.text_field :description, class: 'form-control', placeholder: 'List an option you are considering' %>
+        <%= options_form.text_field :description,
+          class: 'form-control',
+          placeholder: 'List an option you are considering',
+          maxlength: '40' %>
       </div>
       <div class='col-md-3'>
         <%= options_form.link_to_remove "Delete", class: 'btn btn-danger delete'   %>
       </div>
     </div>
   <% end %>
-  <%= f.link_to_add "Add another option", :options, class: 'btn btn-success add' %>
+  <%= f.link_to_add "Add another option", :options, class: 'btn btn-success add', data: { 'max-fields' => 10 } %>
   <div class='clearfix'></div>
 
   <%= link_to fa('arrow-left', 'fa-left') + " Step 2: What matters to you?",
