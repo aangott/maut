@@ -25,6 +25,11 @@ class DimensionsController < ApplicationController
 
   def rank
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
+    if @decision_problem.dimensions.count > 1
+      render :rank
+    else
+      render :no_rankings_required
+    end
   end
 
   def save_ranks
@@ -41,6 +46,11 @@ class DimensionsController < ApplicationController
 
   def weight
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
+    if @decision_problem.dimensions.count > 2
+      render :weight
+    else
+      render :no_weightings_required
+    end
   end
 
   def save_weights

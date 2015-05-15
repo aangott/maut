@@ -1,4 +1,4 @@
-<div id='no-ratings-required'>
+<div id='no-ratings-required' class='narrow'>
   Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
   <h2>Step 5: Rate your options</h2>
   <div class='instructions narrow panel panel-default'>
@@ -17,6 +17,6 @@
   </div>
   <%= link_to fa('arrow-left', 'fa-left') + " Step 4: Rank your options",
     rank_decision_problem_options_path(@decision_problem), class: 'btn btn-info pull-left' %>
-  <%= link_to fa('arrow-right', 'fa-right') + " Step 6: Rank the dimensions",
+  <%= link_to "Step 6: Rank the dimensions ".html_safe + fa('arrow-right', 'fa-right'),
     rank_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-right' %>
 </div>

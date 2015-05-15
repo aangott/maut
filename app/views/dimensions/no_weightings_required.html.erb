@@ -1,0 +1,27 @@
+<div id='no-weightings-required' class='narrow'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 7: Weight the dimensions</h2>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        At this point, if you were considering more than two dimensions, you
+        would be asked to weight the relative importance of those dimensions
+        on a scale. But, since you've listed
+        <% if @decision_problem.dimensions.count == 1 %>
+          one dimension, there's no need for providing this scale ranking.
+        <% else %>
+          two dimensions, the rankings you provided in the previous step are
+          sufficient.
+        <% end %>
+      </p>
+      <p>
+        If you decide to go back and add more dimensions, you'll be asked to
+        rank them here. Otherwise, feel free to move on!
+      </p>
+    </div>
+  </div>
+  <%= link_to fa('arrow-left', 'fa-left') + " Step 6: Rank the dimensions",
+    rank_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-left' %>
+  <%= link_to 'Step 8: View recommendation '.html_safe + fa('arrow-right', 'fa-right'),
+    view_scores_decision_problem_path(@decision_problem), class: 'btn btn-info pull-right' %>
+</div>
