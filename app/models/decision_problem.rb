@@ -46,8 +46,8 @@ class DecisionProblem < ActiveRecord::Base
   def update_ratings_by_rank
     dimensions.each do |dimension|
       dim_ratings = dimension.ratings.sort_by(&:rank)
-      dim_ratings.first.update_attribute(:value, 100)
       dim_ratings.last.update_attribute(:value, 0)
+      dim_ratings.first.update_attribute(:value, 100)
     end
   end
 
@@ -63,8 +63,8 @@ class DecisionProblem < ActiveRecord::Base
 
   def update_dimension_weights_by_rank
     dims_by_rank = dimensions.sort_by(&:rank)
-    dims_by_rank.first.update_attribute(:weight, 100)
     dims_by_rank.last.update_attribute(:weight, 10)
+    dims_by_rank.first.update_attribute(:weight, 100)
   end
 
   def dimensions_json
@@ -80,12 +80,6 @@ class DecisionProblem < ActiveRecord::Base
     options.sort_by(&:score).to_json(methods: :score)
   end
 
-  def unique_descriptions?(attribs)
-    stripped_descriptions = attribs.map(&:description).compact.map(&:strip)
-    stripped_descriptions.length == stripped_descriptions.uniq.length
-  end
-  private :unique_descriptions?
-
   def sufficient_dimensions?
     dimensions.count >= MINIMUM_DIMENSIONS_COUNT
   end
@@ -93,4 +87,10 @@ class DecisionProblem < ActiveRecord::Base
   def sufficient_options?
     options.count >= MINIMUM_OPTIONS_COUNT
   end
+
+  def unique_descriptions?(attribs)
+    stripped_descriptions = attribs.map(&:description).compact.map(&:strip)
+    stripped_descriptions.length == stripped_descriptions.uniq.length
+  end
+  private :unique_descriptions?
 end

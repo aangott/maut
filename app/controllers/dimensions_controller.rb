@@ -28,6 +28,8 @@ class DimensionsController < ApplicationController
     if @decision_problem.dimensions.count > 1
       render :rank
     else
+      @decision_problem.dimensions.first.update_attributes(rank: 1)
+      @decision_problem.update_dimension_weights_by_rank
       render :no_rankings_required
     end
   end
