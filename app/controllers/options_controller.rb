@@ -42,6 +42,11 @@ class OptionsController < ApplicationController
 
   def rate
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
+    if @decision_problem.options.count > 2
+      render :rate
+    else
+      render :no_ratings_required
+    end
   end
 
   def save_ratings

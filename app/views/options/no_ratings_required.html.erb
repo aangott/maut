@@ -1,0 +1,22 @@
+<div id='no-ratings-required'>
+  Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
+  <h2>Step 5: Rate your options</h2>
+  <div class='instructions narrow panel panel-default'>
+    <div class='panel-body'>
+      <p>
+        At this point, if you were considering more than two options, you would
+        be asked to rate each of your options on each of the dimensions
+        that matter to you. But, since you are considering only two options, your
+        rankings on the last step are sufficient.
+      </p>
+      <p>
+        If you decide to go back and add more options, you'll be asked to rate
+        your options here. Otherwise, feel free to move on!
+      </p>
+    </div>
+  </div>
+  <%= link_to fa('arrow-left', 'fa-left') + " Step 4: Rank your options",
+    rank_decision_problem_options_path(@decision_problem), class: 'btn btn-info pull-left' %>
+  <%= link_to fa('arrow-right', 'fa-right') + " Step 6: Rank the dimensions",
+    rank_decision_problem_dimensions_path(@decision_problem), class: 'btn btn-info pull-right' %>
+</div>
