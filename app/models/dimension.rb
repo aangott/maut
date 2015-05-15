@@ -2,7 +2,7 @@ class Dimension < ActiveRecord::Base
   default_scope order('rank')
 
   belongs_to :decision_problem
-  has_many :ratings
+  has_many :ratings, dependent: :destroy
   has_many :options, through: :ratings
 
   validates :description, uniqueness: { scope: :decision_problem_id }
