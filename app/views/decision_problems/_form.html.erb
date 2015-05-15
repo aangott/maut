@@ -16,7 +16,7 @@
     </p>
   </div>
 </div>
-
+<%= render 'layouts/messages' %>
 <%= form_for @decision_problem, html: { class: 'narrow' } do |f| %>
   <% if @decision_problem.errors.any? %>
     <div id='error_explanation'>

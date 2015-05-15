@@ -12,6 +12,7 @@ class DecisionProblem < ActiveRecord::Base
                                 reject_if: :description_blank
 
   validate :unique_dimension_descriptions, :unique_option_descriptions
+  validates :description, presence: true
 
   MINIMUM_OPTIONS_COUNT = 2
   MINIMUM_DIMENSIONS_COUNT = 1

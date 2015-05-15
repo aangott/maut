@@ -9,7 +9,8 @@ class DecisionProblemsController < ApplicationController
     if @decision_problem.save
       redirect_to specify_decision_problem_dimensions_path(@decision_problem.id)
     else
-      render action: "new"
+      flash[:error] = 'Please describe your decision'
+      redirect_to action: "new"
     end
   end
 
@@ -22,7 +23,8 @@ class DecisionProblemsController < ApplicationController
     if @decision_problem.update_attributes(params[:decision_problem])
       redirect_to specify_decision_problem_dimensions_path(@decision_problem.id)
     else
-      render action: "edit"
+      flash[:error] = 'Please describe your decision'
+      redirect_to action: "edit"
     end
   end
 
