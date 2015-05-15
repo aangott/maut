@@ -1,7 +1,15 @@
 <div id='view-scores'>
   Your decision: <span class='your-decision'><%= @decision_problem.description %></span>
   <h2>Step 8: View recommendations</h2>
-  <div class='scores-container'></div>
+  <div class='scores-container'>
+  </div>
+  <table>
+    <tr>
+      <% @decision_problem.options.sort_by(&:score).each do |option| %>
+        <td><%= option.description %></td>
+      <% end %>
+    </tr>
+  </table>
   <div class='instructions narrow panel panel-default'>
     <div class='panel-body'>
       <p>

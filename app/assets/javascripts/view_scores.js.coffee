@@ -1,26 +1,21 @@
 $ ->
   Maut.ViewScores =
 
-    containerWidth: 600
-    containerHeight: 400
-    containerPaddingBottom: 50
-
-    minBarHeight: 2
-    minBarWidth: 5
-    barPadding: 0.15  # as portion of bar height
-
-    labelPaddingBottom: 20
-
-    transitionDelay: 800
-    transitionDuration: 800
-
     initialize: ->
       @optionScores = Maut.optionScores || []
-      @setupCalculatedInstanceVars()
-      @displayScores()
+      return unless @optionScores.length > 0
 
-    setupCalculatedInstanceVars: ->
-      @maxBarHeight = @containerHeight - @containerPaddingBottom
+      @containerWidth = 900
+      @containerHeight = 400
+
+      @minBarHeight = 2
+      @minBarWidth = 5
+      @barPadding = 0.15  # as portion of bar height
+
+      @transitionDelay = 800
+      @transitionDuration = 800
+
+      @maxBarHeight = @containerHeight
       @yScale = d3.scale
         .linear()
         .domain([0, d3.max(@optionScores, (d) ->
@@ -37,6 +32,14 @@ $ ->
           d.score
         )])
         .range([0, 100])
+
+      @adjustLabels()
+      @displayScores()
+
+    adjustLabels: ->
+      labelWidth = (@containerWidth - 30) / @optionScores.length
+      d3.selectAll('td').style('max-width', "#{labelWidth}px")
+      d3.selectAll('td').style('min-width', "#{labelWidth}px")
 
     displayScores: ->
       container = d3.select('.scores-container')
@@ -57,27 +60,10 @@ $ ->
         .attr('x', (d, i) =>
           @xScale(i)
         )
-        .attr('y', @containerHeight - @containerPaddingBottom)
+        .attr('y', @containerHeight)
         .attr('height', 0)  # change this to 0
         .attr('width', @xScale.rangeBand())
         .attr('fill', 'hsl(0, 50%, 43%)')
-
-      # create a label for each bar
-      labels = svg.selectAll('text')
-        .data(@optionScores)
-        .enter()
-        .append('text')
-        .classed('label', true)
-        .text((d) ->
-          d.description
-        )
-        .attr('x', (d, i) =>
-          @xScale(i)
-        )
-        .attr('y', (d, i) =>
-          @containerHeight - @labelPaddingBottom
-        )
-        .attr('opacity', 0)
 
       # transition the bars to their proper height
       bars.transition()
@@ -89,18 +75,18 @@ $ ->
           @yScale(d.score)
         )
         .attr('y', (d) =>
-           @containerHeight - @containerPaddingBottom - @yScale(d.score)
+           @containerHeight - @yScale(d.score)
         )
         .attr('fill', (d) =>
           @colorFromScore(d.score)
         )
 
-      labels.transition()
+      d3.selectAll('td').transition()
         .delay((d, i) =>
           i * @transitionDelay
         )
         .duration(@transitionDuration / 2)
-        .attr('opacity', 1)
+        .style('color', 'rgba(255, 255, 255, 1)')
 
     colorFromScore: (score) ->
       scaledScore = @colorScale(score)
