@@ -28,7 +28,13 @@
     </div>
   </div>
   <%= form_tag save_weights_decision_problem_dimensions_path(@decision_problem), method: :put do %>
-    <div class='dimension-rating-container'></div>
+    <div class='dimension-rating-container rating-container'>
+      <table class='labels'>
+        <% @decision_problem.dimensions.each do |dimension| %>
+            <tr><td><%= dimension.description %></td></tr>
+        <% end %>
+      </table>
+    </div>
     <% @decision_problem.dimensions.each do |dimension| %>
       <input type='hidden' data-rating='<%= dimension.id %>' name='dimensions[<%= dimension.id %>][weight]' value='<%= dimension.weight || 50 %>'/>
     <% end %>

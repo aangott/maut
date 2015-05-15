@@ -1,32 +1,27 @@
 $ ->
   Maut.RateDimensions =
 
-    containerWidth: 900
-    containerHeight: 300
-    containerPaddingLeft: 150
-    containerPaddingRight: 20
-
-    minRating: 0
-    maxRating: 100
-    defaultRating: 50
-
-    minBarWidth: 5
-    barPadding: 0.15  # as portion of bar height
-
-    maxTransitionDelay: 500
-    transitionDuration: 1000
-
-    pullSize: 20
-
-    labelPaddingTop: 5
-
     initialize: ->
       @dimensionsForWeighting = Maut.dimensionsForWeighting || []
-      @setupCalculatedInstanceVars()
-      @setupRatings(d3.select(".dimension-rating-container"), @dimensionsForWeighting)
+      @numDimensions = @dimensionsForWeighting.length
+      return unless @numDimensions > 0
 
-    setupCalculatedInstanceVars: ->
-      @maxBarWidth = (@containerWidth - (@containerPaddingLeft + @containerPaddingRight))
+      @barHeight = 60
+      @containerWidth = 750
+      @containerHeight = @barHeight * @numDimensions
+
+      @minRating = 10
+      @maxRating = 100
+      @defaultRating = 50
+
+      @pullSize = 20
+      @minBarWidth = 70
+      @maxBarWidth = @containerWidth - @pullSize
+      @barPadding = 0.15  # as portion of bar height
+
+      @maxTransitionDelay = 500
+      @transitionDuration = 1000
+
       @widthScale = d3.scale
         .linear()
         .domain([@minRating, @maxRating])
@@ -35,6 +30,8 @@ $ ->
         .linear()
         .domain([@minBarWidth, @maxBarWidth])
         .range([@minRating, @maxRating])
+
+      @setupRatings(d3.select(".dimension-rating-container"), @dimensionsForWeighting)
 
     setupRatings: (container, ratings) ->
       yScale = d3.scale
@@ -47,7 +44,7 @@ $ ->
         .attr('width', @containerWidth)
         .attr('height', @containerHeight)
 
-      # create a bar for each rating, but start with width = 0
+      # create a bar for each rating, but start at min width
       bars = svg.selectAll('rect.bar')
         .data(ratings, (d) ->
           d.id
@@ -58,27 +55,13 @@ $ ->
         .attr('data-rating', (d) ->
           d.id
         )
-        .attr('x', @containerPaddingLeft)
+        .attr('x', 0)
         .attr('y', (d, i) ->
           yScale(i)
         )
         .attr('height', yScale.rangeBand())
-        .attr('width', 0)
+        .attr('width', @minBarWidth)
         .attr('fill', 'hsl(0, 50%, 43%)')
-
-      # create a label for each bar
-      svg.selectAll('text')
-        .data(ratings)
-        .enter()
-        .append('text')
-        .classed('label', true)
-        .text((d) ->
-          d.description
-        )
-        .attr('x', 0)
-        .attr('y', (d, i) =>
-          yScale(i) + (yScale.rangeBand() / 2) + @labelPaddingTop
-        )
 
       # create a pull on each bar, but at far left of svg
       pulls = svg.selectAll('rect.pull')
@@ -91,7 +74,7 @@ $ ->
         .attr('data-rating', (d) ->
           d.id
         )
-        .attr('x', @containerPaddingLeft - @pullSize / 2)
+        .attr('x', @minBarWidth - (@pullSize / 2))
         .attr('y', (d, i) =>
           yScale(i) + (yScale.rangeBand() / 2) - (@pullSize / 2)
         )
@@ -124,7 +107,7 @@ $ ->
         )
         .duration(@transitionDuration)
         .attr('x', (d) =>
-          @widthScale(@getValue(d)) + @containerPaddingLeft - (@pullSize / 2);
+          @widthScale(@getValue(d)) - (@pullSize / 2)
         )
         .each('end', ->
           pull = d3.select(@)
@@ -152,15 +135,15 @@ $ ->
       if pull.classed('locked')
         return
       pull.attr('x', Math.max(
-        @containerPaddingLeft + @minBarWidth - @pullSize/2,
-        Math.min(@containerPaddingLeft + @maxBarWidth - @pullSize/2, d3.event.x)
+        @minBarWidth - (@pullSize / 2),
+        Math.min(@maxBarWidth - (@pullSize / 2), d3.event.x)
       ))
 
       bar = d3.select(".bar[data-rating='#{d.id}']")
       bar.attr('fill', @colorFromRating(@widthToScore(bar.attr('width'))))
       bar.attr('width', Math.max(
         @minBarWidth,
-        Math.min(@maxBarWidth, d3.event.x - @containerPaddingLeft + @pullSize/2)
+        Math.min(@maxBarWidth, d3.event.x + (@pullSize / 2))
       ))
 
       input = d3.select("input[data-rating='#{d.id}']")
