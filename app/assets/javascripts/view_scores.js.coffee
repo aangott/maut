@@ -5,6 +5,7 @@ $ ->
     containerHeight: 400
     containerPaddingBottom: 50
 
+    minBarHeight: 2
     minBarWidth: 5
     barPadding: 0.15  # as portion of bar height
 
@@ -25,7 +26,7 @@ $ ->
         .domain([0, d3.max(@optionScores, (d) ->
           d.score
         )])
-        .range([0, @maxBarHeight])
+        .range([@minBarHeight, @maxBarHeight])
       @xScale = d3.scale
         .ordinal()
         .domain(d3.range(@optionScores.length))
