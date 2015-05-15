@@ -8,16 +8,11 @@ class Option < ActiveRecord::Base
   before_validation :strip_whitespace
 
   def score
-    total = 0
-    ratings.each do |rating|
-      total += (rating.value * rating.dimension.weight)
-    end
-    total
+    ratings.map { |rating| rating.value * rating.dimension.weight }.reduce(:+)
   end
 
   def strip_whitespace
     self.description = self.description.try(:strip)
   end
   private :strip_whitespace
-
 end
