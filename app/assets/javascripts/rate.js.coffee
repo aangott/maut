@@ -3,6 +3,8 @@ $ ->
 
     initialize: ->
       @ratingsByDimension = Maut.ratingsByDimension || []
+      return unless @ratingsByDimension.length > 0
+
       @numOptions = @ratingsByDimension[0].sorted_ratings.length
 
       @barHeight = 60
