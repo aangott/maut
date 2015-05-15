@@ -20,7 +20,7 @@ class DimensionsController < ApplicationController
     else
       flash[:error] = @decision_problem.errors.full_messages.join(', ')
     end
-    redirect_to action: "specify"
+    render :specify
   end
 
   def rank
