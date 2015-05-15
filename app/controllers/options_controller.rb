@@ -4,7 +4,7 @@ class OptionsController < ApplicationController
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
     if @decision_problem.options.empty?
       DecisionProblem::MINIMUM_OPTIONS_COUNT.times do
-        @decision_problem.options.create
+        @decision_problem.options.build
       end
     end
   end
@@ -12,11 +12,15 @@ class OptionsController < ApplicationController
   def save
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
     if @decision_problem.update_attributes(params[:decision_problem])
-      redirect_to action: "rank"
+      if @decision_problem.sufficient_options?
+        return redirect_to action: "rank"
+      else
+        flash[:error] = 'Please specify at least two options.'
+      end
     else
       flash[:error] = @decision_problem.errors.full_messages.join(', ')
-      redirect_to action: "specify"
     end
+    redirect_to action: "specify"
   end
 
   def rank

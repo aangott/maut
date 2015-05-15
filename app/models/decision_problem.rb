@@ -86,4 +86,11 @@ class DecisionProblem < ActiveRecord::Base
   end
   private :unique_descriptions?
 
+  def sufficient_dimensions?
+    dimensions.count >= MINIMUM_DIMENSIONS_COUNT
+  end
+
+  def sufficient_options?
+    options.count >= MINIMUM_OPTIONS_COUNT
+  end
 end

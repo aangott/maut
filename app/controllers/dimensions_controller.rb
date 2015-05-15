@@ -4,7 +4,7 @@ class DimensionsController < ApplicationController
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
     if @decision_problem.dimensions.empty?
       DecisionProblem::MINIMUM_DIMENSIONS_COUNT.times do
-        @decision_problem.dimensions.create
+        @decision_problem.dimensions.build
       end
     end
   end
@@ -12,11 +12,15 @@ class DimensionsController < ApplicationController
   def save
     @decision_problem = DecisionProblem.find(params[:decision_problem_id])
     if @decision_problem.update_attributes(params[:decision_problem])
-      redirect_to specify_decision_problem_options_path(@decision_problem)
+      if @decision_problem.sufficient_dimensions?
+        return redirect_to specify_decision_problem_options_path(@decision_problem)
+      else
+        flash[:error] = 'Please specify at least one dimension.'
+      end
     else
       flash[:error] = @decision_problem.errors.full_messages.join(', ')
-      redirect_to action: "specify"
     end
+    redirect_to action: "specify"
   end
 
   def rank
